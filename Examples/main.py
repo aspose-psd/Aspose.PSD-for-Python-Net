@@ -1,0 +1,20 @@
+# This is a main file of Aspose.PSD for Python via .NET Examples.
+# You can debug any tests and check the showcases of PSD, PSB, AI FileFormat API
+from releases.Release_23_12_Tests import Release_23_12_Tests
+from showcases.Showcases import Showcases
+
+def run_releases_tests():
+    release23_23 = Release_23_12_Tests()
+    release23_23.RunAllTests()
+
+def run_showcases_tests():
+    showcases = Showcases()
+    showcases.RunAllTests()
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    # Don't forget install Aspose.PSD for Python via .NET
+    # pip install aspose-psd
+    # Temporary license can be obtained on https://purchase.aspose.com/temporary-license/
+
+    run_releases_tests()
