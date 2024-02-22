@@ -29,6 +29,10 @@ Directory | Description
 - [Convert PSD and PSB Files  between different Color Modes and Bit Depths](https://docs.aspose.com/psd/python-net/bit-depth-color-mode-convert/)
 - And much more. Please check [documentation page](https://docs.aspose.com/psd/python-net/)
 
+<p align="center"> 
+     <img src="https://raw.githubusercontent.com/aspose-psd/Aspose.PSD-for-Python-Net/main/showcase-image.png" alt="Showcase for PSD Automation" Title="Showcase Image for PSD Automation"/>
+</p>
+
 
 ## Aspose.PSD Supported formats
 
