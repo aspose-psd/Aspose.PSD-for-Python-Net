@@ -17,4 +17,5 @@ if __name__ == '__main__':
     # pip install aspose-psd
     # Temporary license can be obtained on https://purchase.aspose.com/temporary-license/
 
+    run_showcases_tests()
     run_releases_tests()

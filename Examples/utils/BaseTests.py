@@ -80,10 +80,11 @@ class BaseTests:
 
         for method in attrs:
             try:
-                if (method.__name__.endswith("Test")):
-                    example.exampleMode = True
-                    example.exampleMethod = "Tests." + method.__name__ + "()"
-                    method()
+                if hasattr(method, '__name__'):
+                    if (method.__name__.endswith("Test")):
+                        example.exampleMode = True
+                        example.exampleMethod = "Tests." + method.__name__ + "()"
+                        method()
             except TypeError:
                 # Can't handle methods with required arguments.
                 pass
