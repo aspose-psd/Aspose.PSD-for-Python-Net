@@ -1,5 +1,7 @@
 # This is a main file of Aspose.PSD for Python via .NET Examples.
 # You can debug any tests and check the showcases of PSD, PSB, AI FileFormat API
+from aspose.psd import License
+
 from releases.Release_23_12_Tests import Release_23_12_Tests
 from showcases.Showcases import Showcases
 
@@ -17,5 +19,7 @@ if __name__ == '__main__':
     # pip install aspose-psd
     # Temporary license can be obtained on https://purchase.aspose.com/temporary-license/
 
+    #lic = License()
+    #lic.set_license("PathToLicense")
     run_showcases_tests()
     run_releases_tests()
