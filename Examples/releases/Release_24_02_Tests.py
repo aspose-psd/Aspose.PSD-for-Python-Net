@@ -15,9 +15,9 @@ from aspose.psd.imageloadoptions import PsdLoadOptions
 from aspose.psd.imageoptions import PngOptions, PsdOptions
 from aspose.pycore import cast, as_of
 
-from Examples.utils.BaseTests import BaseTests
-from Examples.utils.Comparison import Comparison
-from Examples.utils.LicenseHelper import LicenseHelper
+from utils.BaseTests import BaseTests
+from utils.Comparison import Comparison
+from utils.LicenseHelper import LicenseHelper
 
 
 class Release_24_02_Tests(BaseTests):
