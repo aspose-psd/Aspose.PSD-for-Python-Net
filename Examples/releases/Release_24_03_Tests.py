@@ -53,7 +53,7 @@ class Release_24_03_Tests(BaseTests):
         with PsdImage.load(outputFile) as image:
             psdImage16 = cast(PsdImage, image)
 
-            testResource = as_of(psdImage16.global_layer_resources[5], Lr16Resource)
+            testResource = as_of(psdImage16.global_layer_resources[0], Lr16Resource)
             if testResource is not None:
                 # is ok
                 pass
@@ -76,7 +76,7 @@ class Release_24_03_Tests(BaseTests):
         with PsdImage.load(outputFile) as image:
             psdImage32 = cast(PsdImage, image)
 
-            testResource = as_of(psdImage32.global_layer_resources[5], Lr32Resource)
+            testResource = as_of(psdImage32.global_layer_resources[0], Lr32Resource)
             if testResource is not None:
                 # is ok
                 pass
