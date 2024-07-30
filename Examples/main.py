@@ -8,9 +8,14 @@ from releases.Release_24_03_Tests import Release_24_03_Tests
 from releases.Release_24_02_Tests import Release_24_02_Tests
 from releases.Release_23_12_Tests import Release_23_12_Tests
 from releases.Release_24_01_Tests import Release_24_01_Tests
+from releases.Release_24_06_Tests import Release_24_06_Tests
 from showcases.Showcases import Showcases
 
 def run_releases_tests():
+
+    release24_06 = Release_24_06_Tests()
+    release24_06.RunAllTests()
+
     release24_05 = Release_24_05_Tests()
     release24_05.RunAllTests()
 
