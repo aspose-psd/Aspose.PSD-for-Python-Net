@@ -132,24 +132,3 @@ class Release_24_08_Tests(BaseTests):
                 Comparison.CheckAgainstEthalon(output_file, reference_file, 0)
 
         self.remove_all_unzipped_files()
-
-    def CUSTOMER1(self):
-        source = "C:\\Users\\dimsa\\Downloads\\iphone13snapcase.psd\\iphone13snapcase.psd"
-        change_file = "C:\\Users\\dimsa\\Downloads\\iphone13snapcase.psd\\Python_logo_and_wordmark.svg.png"
-        output_file = "C:\\Users\\dimsa\\Downloads\\iphone13snapcase.psd\\output.png"
-        with Image.load(source) as img:
-            image = cast(PsdImage, img)
-            for layer in image.layers:
-                if (layer.display_name == "ARTHERE"):
-                    smart_layer = cast(SmartObjectLayer, layer)
-                    #smart_layer.update_modified_content()
-                    ##smart_layer.()
-                    smart_layer.relink_to_file(change_file)
-                    #smart_layer.replace_contents(change_file)
-            pngOpt = PngOptions
-            pngOpt.color_type = PngColorType.TRUECOLOR_WITH_ALPHA
-            image.save(output_file, pngOpt)
-
-LicenseHelper.set_license()
-a = Release_24_08_Tests()
-a.CUSTOMER1()
