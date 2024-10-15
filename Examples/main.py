@@ -2,6 +2,7 @@
 # You can debug any tests and check the showcases of PSD, PSB, AI FileFormat API
 from aspose.psd import License
 
+from releases.Release_24_09_Tests import Release_24_09_Tests
 from releases.Release_24_07_Tests import Release_24_07_Tests
 from releases.Release_24_08_Tests import Release_24_08_Tests
 from releases.Release_24_05_Tests import Release_24_05_Tests
@@ -14,6 +15,9 @@ from releases.Release_24_06_Tests import Release_24_06_Tests
 from showcases.Showcases import Showcases
 
 def run_releases_tests():
+
+    release24_09 = Release_24_09_Tests()
+    release24_09.RunAllTests()
 
     release24_08 = Release_24_08_Tests()
     release24_08.RunAllTests()
