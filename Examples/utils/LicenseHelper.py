@@ -19,6 +19,7 @@ class LicenseHelper:
             return
         license = License()
         licenseFolder = FolderSettings.BaseLicenseFolder()
-        licensePath = os.path.join(licenseFolder, "Aspose.PSD.Python.NET.lic")
+        licensePath = "C:\Projects\python2net\Tests\license\Aspose.PSD.Python.NET.lic"
+            #os.path.join(licenseFolder, "Aspose.PSD.Python.NET.lic")
         license.set_license(licensePath)
         LicenseHelper.isLicensed = True

@@ -23,9 +23,17 @@ from releases.Release_25_05_Tests import Release_25_05_Tests
 from releases.Release_25_06_Tests import Release_25_06_Tests
 from releases.Release_25_07_Tests import Release_25_07_Tests
 from releases.Release_25_08_Tests import Release_25_08_Tests
+from releases.Release_25_09_Tests import Release_25_09_Tests
+from releases.Release_25_10_Tests import Release_25_10_Tests
 from showcases.Showcases import Showcases
 
 def run_releases_tests():
+
+    release25_10 = Release_25_10_Tests()
+    release25_10.RunAllTests()
+
+    release25_09 = Release_25_09_Tests()
+    release25_09.RunAllTests()
 
     release25_08 = Release_25_08_Tests()
     release25_08.RunAllTests()
