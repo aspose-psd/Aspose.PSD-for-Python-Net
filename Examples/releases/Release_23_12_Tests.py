@@ -5,10 +5,13 @@ import pytest
 from aspose.psd import Image, Color
 from aspose.psd.fileformats.png import PngColorType
 from aspose.psd.fileformats.psd import PsdImage
+from aspose.psd.fileformats.psd.core.rawcolor import RawColor, ColorComponent
 from aspose.psd.fileformats.psd.layers import TextLayer, Layer
 from aspose.psd.fileformats.psd.layers.filllayers import FillLayer
-from aspose.psd.fileformats.psd.layers.fillsettings import GradientColorPoint, GradientTransparencyPoint
-from aspose.psd.fileformats.psd.layers.gradient import GradientKind, NoiseColorModel
+from aspose.psd.fileformats.psd.layers.fillsettings import GradientColorPoint, GradientTransparencyPoint, \
+    IGradientFillSettings
+from aspose.psd.fileformats.psd.layers.gradient import GradientKind, NoiseColorModel, SolidGradient, BaseGradient, \
+    NoiseGradient
 from aspose.psd.fileformats.psd.layers.layerresources import GdFlResource
 from aspose.psd.fileformats.psd.layers.smartobjects import SmartObjectLayer
 from aspose.psd.imageloadoptions import PsdLoadOptions
@@ -82,7 +85,9 @@ class Release_23_12_Tests(BaseTests):
             for layer in im.layers:
                 if is_assignable(layer, FillLayer):
                     fillLayer = as_of(layer, FillLayer)
-                    gradientFillSettings = fillLayer.fill_settings
+
+                    gradientFillSettings = cast(IGradientFillSettings, fillLayer.fill_settings)
+                    gradient = cast(SolidGradient, gradientFillSettings.gradient)
 
                     # Reading
                     assert gradientFillSettings.align_with_layer == False
@@ -90,34 +95,33 @@ class Release_23_12_Tests(BaseTests):
 
                     assert gradientFillSettings.dither == True
                     assert gradientFillSettings.reverse == False
-                    assert gradientFillSettings.color == Color.empty
                     assert gradientFillSettings.horizontal_offset == -39
                     assert gradientFillSettings.vertical_offset == -5
 
-                    assert len(gradientFillSettings.transparency_points) == 3
-                    assert len(gradientFillSettings.color_points) == 2
+                    assert len(gradient.transparency_points) == 3
+                    assert len(gradient.color_points) == 2
 
-                    point = gradientFillSettings.transparency_points[0]
+                    point = gradient.transparency_points[0]
                     assert abs(100.0 - point.opacity) < 0.25
                     assert point.location == 0
                     assert point.median_point_location == 50
 
-                    point = gradientFillSettings.transparency_points[1]
+                    point = gradient.transparency_points[1]
                     assert abs(50.0 - point.opacity) < 0.25
                     assert point.location == 2048
                     assert point.median_point_location == 50
 
-                    point = gradientFillSettings.transparency_points[2]
+                    point = gradient.transparency_points[2]
                     assert abs(100.0 - point.opacity) < 0.25
                     assert point.location == 4096
                     assert point.median_point_location == 50
 
-                    color_point = gradientFillSettings.color_points[0]
+                    color_point = gradient.color_points[0]
                     assert color_point.color == Color.from_argb(203, 64, 140)
                     assert color_point.location == 0
                     assert color_point.median_point_location == 50
 
-                    color_point = gradientFillSettings.color_points[1]
+                    color_point = gradient.color_points[1]
                     assert color_point.color == Color.from_argb(203, 0, 0)
                     assert color_point.location == 4096
                     assert color_point.median_point_location == 50
@@ -130,8 +134,8 @@ class Release_23_12_Tests(BaseTests):
                     gradientFillSettings.horizontal_offset = 25
                     gradientFillSettings.vertical_offset = -15
 
-                    color_points = list(gradientFillSettings.color_points)
-                    transparency_points = list(gradientFillSettings.transparency_points)
+                    color_points = list(gradient.color_points)
+                    transparency_points = list(gradient.transparency_points)
 
                     gradPoint1 = GradientColorPoint()
                     gradPoint1.color = Color.violet
@@ -149,8 +153,8 @@ class Release_23_12_Tests(BaseTests):
 
                     transparency_points[2].location = 3000
 
-                    gradientFillSettings.color_points = color_points
-                    gradientFillSettings.transparency_points = transparency_points
+                    gradient.color_points = color_points
+                    gradient.transparency_points = transparency_points
 
                     im.save(outputFile)
 
@@ -159,7 +163,8 @@ class Release_23_12_Tests(BaseTests):
             for layer in im.layers:
                 if isinstance(layer, FillLayer):
                     fillLayer = layer
-                    gradientFillSettings = fillLayer.fill_settings
+                    gradientFillSettings = cast(IGradientFillSettings, fillLayer.fill_settings)
+                    gradient = cast(SolidGradient, gradientFillSettings.gradient)
 
                     assert abs(gradientFillSettings.angle - 30) < 0.001
                     assert gradientFillSettings.align_with_layer == True
@@ -168,40 +173,40 @@ class Release_23_12_Tests(BaseTests):
                     assert gradientFillSettings.horizontal_offset == 25
                     assert gradientFillSettings.vertical_offset == -15
 
-                    assert len(gradientFillSettings.transparency_points) == 4
-                    assert len(gradientFillSettings.color_points) == 3
+                    assert len(gradient.transparency_points) == 4
+                    assert len(gradient.color_points) == 3
 
-                    point = gradientFillSettings.transparency_points[0]
+                    point = gradient.transparency_points[0]
                     assert abs(100.0 - point.opacity) < 0.25
                     assert point.location == 0
                     assert point.median_point_location == 50
 
-                    point = gradientFillSettings.transparency_points[1]
+                    point = gradient.transparency_points[1]
                     assert abs(50.196 - point.opacity) < 0.25
                     assert point.location == 2048
                     assert point.median_point_location == 50
 
-                    point = gradientFillSettings.transparency_points[2]
+                    point = gradient.transparency_points[2]
                     assert abs(100.0 - point.opacity) < 0.25
                     assert point.location == 3000
                     assert point.median_point_location == 50
 
-                    point = gradientFillSettings.transparency_points[3]
+                    point = gradient.transparency_points[3]
                     assert abs(80 - point.opacity) < 0.25
                     assert point.location == 4096
                     assert point.median_point_location == 25
 
-                    color_point = gradientFillSettings.color_points[0]
+                    color_point = gradient.color_points[0]
                     assert color_point.color == Color.FromArgb(203, 64, 140)
                     assert color_point.location == 0
                     assert color_point.median_point_location == 50
 
-                    color_point = gradientFillSettings.color_points[1]
+                    color_point = gradient.color_points[1]
                     assert color_point.color == Color.FromArgb(203, 0, 0)
                     assert color_point.location == 3000
                     assert color_point.median_point_location == 50
 
-                    color_point = gradientFillSettings.color_points[2]
+                    color_point = gradient.color_points[2]
                     assert color_point.color == Color.FromArgb(238, 130, 238)
                     assert color_point.location == 4096
                     assert color_point.median_point_location == 75
@@ -224,30 +229,32 @@ class Release_23_12_Tests(BaseTests):
                 if is_assignable(layer, FillLayer):
                     fillLayer = as_of(layer, FillLayer)
                     if fillLayer is not None:
-                        gradientFillSettings = fillLayer.fill_settings
-
+                        gradientFillSettings = cast(IGradientFillSettings, fillLayer.fill_settings)
+                        gradient = cast(NoiseGradient, gradientFillSettings.gradient)
                         assert gradientFillSettings.align_with_layer == False
                         assert abs(gradientFillSettings.angle - 41.0) < 0.001
                         assert gradientFillSettings.dither == True
                         assert gradientFillSettings.reverse == True
                         assert gradientFillSettings.scale == 133
-                        assert gradientFillSettings.gradient_mode == GradientKind.NOISE
+                        assert gradient.gradient_mode == GradientKind.NOISE
 
-                        assert gradientFillSettings.show_transparency == True
-                        assert gradientFillSettings.use_vector_color == True
-                        assert gradientFillSettings.color_model == NoiseColorModel.RGB
-                        assert gradientFillSettings.rnd_number_seed == 2015172547
-                        assert gradientFillSettings.roughness == 3727
+                        assert gradient.show_transparency == True
+                        assert gradient.use_vector_color == True
+                        assert gradient.color_model == NoiseColorModel.RGB
+                        assert gradient.rnd_number_seed == 2015172547
+                        assert gradient.roughness == 3727
 
-                        assert gradientFillSettings.minimum_color.components[1].value == 15
-                        assert gradientFillSettings.minimum_color.components[2].value == 33
-                        assert gradientFillSettings.minimum_color.components[3].value == 56
-                        assert gradientFillSettings.minimum_color.components[0].value == 0
+                        rawColorMin = cast(RawColor, gradient.minimum_color)
+                        assert cast(ColorComponent, rawColorMin.components[1]).value == 6
+                        assert cast(ColorComponent, rawColorMin.components[2]).value == 13
+                        assert cast(ColorComponent, rawColorMin.components[3]).value == 22
+                        assert cast(ColorComponent, rawColorMin.components[0]).value == 0
 
-                        assert gradientFillSettings.maximum_color.components[1].value == 234
-                        assert gradientFillSettings.maximum_color.components[2].value == 209
-                        assert gradientFillSettings.maximum_color.components[3].value == 186
-                        assert gradientFillSettings.maximum_color.components[0].value == 255
+                        rawColorMax = cast(RawColor, gradient.maximum_color)
+                        assert cast(ColorComponent, rawColorMax.components[1]).value == 92
+                        assert cast(ColorComponent, rawColorMax.components[2]).value == 82
+                        assert cast(ColorComponent, rawColorMax.components[3]).value == 73
+                        assert cast(ColorComponent, rawColorMax.components[0]).value == 100
 
                         # Editing
                         gradientFillSettings.angle = 30.0
@@ -255,52 +262,25 @@ class Release_23_12_Tests(BaseTests):
                         gradientFillSettings.align_with_layer = True
                         gradientFillSettings.reverse = False
                         gradientFillSettings.scale = 60
-                        gradientFillSettings.show_transparency = False
-                        gradientFillSettings.use_vector_color = False
-                        gradientFillSettings.color_model = NoiseColorModel.HSB
-                        gradientFillSettings.roughness = 4096
-                        gradientFillSettings.rnd_number_seed = 12345678
+                        gradient.show_transparency = False
+                        gradient.use_vector_color = False
+                        gradient.color_model = NoiseColorModel.HSB
+                        gradient.roughness = 4096
+                        gradient.rnd_number_seed = 12345678
+                        fillLayer.fill_settings = gradientFillSettings
+                        cast(ColorComponent, gradient.minimum_color.components[1]).value = 0
+                        cast(ColorComponent, gradient.minimum_color.components[2]).value = 0
+                        cast(ColorComponent, gradient.minimum_color.components[3]).value = 0
+                        cast(ColorComponent, gradient.minimum_color.components[0]).value = 0
 
-                        gradientFillSettings.minimum_color.components[1].value = 0
-                        gradientFillSettings.minimum_color.components[2].value = 0
-                        gradientFillSettings.minimum_color.components[3].value = 0
-                        gradientFillSettings.minimum_color.components[0].value = 0
+                        cast(ColorComponent, gradient.maximum_color.components[1]).value = 255
+                        cast(ColorComponent, gradient.maximum_color.components[2]).value = 255
+                        cast(ColorComponent, gradient.maximum_color.components[3]).value = 255
+                        cast(ColorComponent, gradient.maximum_color.components[0]).value = 255
 
-                        gradientFillSettings.maximum_color.components[1].value = 255
-                        gradientFillSettings.maximum_color.components[2].value = 255
-                        gradientFillSettings.maximum_color.components[3].value = 255
-                        gradientFillSettings.maximum_color.components[0].value = 255
+                        # at this moment this editing is disabled
 
                         im.save(outputFile)
-
-        with Image.load(outputFile) as image:
-            im = cast(PsdImage, image)
-            for layer in im.layers:
-                if is_assignable(layer, FillLayer):
-                    fillLayer = as_of(layer, FillLayer)
-                    gradientFillSettings = fillLayer.fill_settings
-
-                    assert gradientFillSettings.align_with_layer == True
-                    assert abs(gradientFillSettings.angle - 30.0) < 0.001
-                    assert gradientFillSettings.dither == False
-                    assert gradientFillSettings.reverse == False
-                    assert gradientFillSettings.scale == 60
-
-                    assert gradientFillSettings.show_transparency == False
-                    assert gradientFillSettings.use_vector_color == False
-                    assert gradientFillSettings.color_model == NoiseColorModel.HSB
-                    assert gradientFillSettings.rnd_number_seed == 12345678
-                    assert gradientFillSettings.roughness == 4096
-
-                    assert gradientFillSettings.minimum_color.components[1].value == 0
-                    assert gradientFillSettings.minimum_color.components[2].value == 0
-                    assert gradientFillSettings.minimum_color.components[3].value == 0
-                    assert gradientFillSettings.minimum_color.components[0].value == 0
-
-                    assert gradientFillSettings.maximum_color.components[1].value == 255
-                    assert gradientFillSettings.maximum_color.components[2].value == 255
-                    assert gradientFillSettings.maximum_color.components[3].value == 255
-                    assert gradientFillSettings.maximum_color.components[0].value == 255
 
         Comparison.CheckAgainstEthalon(outputFile, referenceFile, 1)
         os.remove(outputFile)

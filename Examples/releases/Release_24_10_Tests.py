@@ -7,8 +7,8 @@ from aspose.psd.fileformats.ai import AiImage
 from aspose.psd.fileformats.png import PngColorType
 from aspose.psd.fileformats.psd import PsdImage, CompressionMethod
 from aspose.psd.fileformats.psd.layers import ShapeLayer, TextLayer
-from aspose.psd.fileformats.psd.layers.fillsettings import GradientType, NoiseGradientFillSettings
-from aspose.psd.fileformats.psd.layers.gradient import NoiseColorModel, GradientKind
+from aspose.psd.fileformats.psd.layers.fillsettings import GradientType, IGradientFillSettings, IFillSettings
+from aspose.psd.fileformats.psd.layers.gradient import NoiseColorModel, GradientKind, NoiseGradient
 from aspose.psd.fileformats.psd.layers.layerresources import BaseArtboardInfoResource, AbddResource, ArtBResource, ArtDResource, LyvrResource
 from aspose.psd.fileformats.psd.layers.layerresources.typetoolinfostructures import IntegerStructure, StringStructure
 from aspose.psd.fileformats.psd.layers.smartobjects import SmartObjectLayer
@@ -136,8 +136,6 @@ class Release_24_10_Tests(BaseTests):
     # https://issue.saltov.dynabic.com/issues/PSDNET-2192
     # https://issue.saltov.dynabic.com/issues/PSDPYTHON-113
     def PSDNET2192Test(self):
-        # Temporary disabled. Fixed in 24.11
-        pass
         inputFile = self.GetFileInBaseFolder("vectormasks.psd")
         outputFilePsd = self.GetFileInOutputFolder("vectormasks_output.psd")
         referenceFilePsd = self.GetFileInBaseFolder("vectormasks_output.psd")
@@ -148,21 +146,22 @@ class Release_24_10_Tests(BaseTests):
 
             # Test Gradient parameters
             shapeLayer = cast(ShapeLayer, image.layers[1])
-            gradientSettings = cast(NoiseGradientFillSettings, shapeLayer.stroke.fill)
+            gradientSettings = cast(IGradientFillSettings, shapeLayer.stroke.fill)
+            noiseGradient = cast(NoiseGradient, gradientSettings.gradient)
 
             assert True == gradientSettings.dither
             assert True == gradientSettings.reverse
             assert 90.0 == gradientSettings.angle
             assert 80 == gradientSettings.scale
             assert True == gradientSettings.align_with_layer
-            assert GradientType.Radial == gradientSettings.gradient_type
-            assert GradientKind.Noise == gradientSettings.gradient_mode
-            assert 1837065285 == gradientSettings.rndNumberSeed
-            assert False == gradientSettings.show_transparency
-            assert False == gradientSettings.use_vector_color
-            assert 2048 == gradientSettings.roughness
-            assert NoiseColorModel.HSB == gradientSettings.color_model
-            assert 0 == gradientSettings.expansion_count
+            assert GradientType.RADIAL == gradientSettings.gradient_type
+            assert GradientKind.NOISE == noiseGradient.gradient_mode
+            assert 1837065285 == noiseGradient.rnd_number_seed
+            assert False == noiseGradient.show_transparency
+            assert False == noiseGradient.use_vector_color
+            assert 2048 == noiseGradient.roughness
+            assert NoiseColorModel.HSB == noiseGradient.color_model
+            assert 0 == noiseGradient.expansion_count
 
             # Edit
             gradientSettings.dither = False
@@ -171,10 +170,10 @@ class Release_24_10_Tests(BaseTests):
             gradientSettings.scale = 34
             gradientSettings.align_with_layer = False
             gradientSettings.gradient_type = GradientType.LINEAR
-            gradientSettings.show_transparency = True
-            gradientSettings.use_vector_color = True
-            gradientSettings.roughness = 3072
-            gradientSettings.color_model = NoiseColorModel.RGB
+            noiseGradient.show_transparency = True
+            noiseGradient.use_vector_color = True
+            noiseGradient.roughness = 3072
+            noiseGradient.color_model = NoiseColorModel.RGB
 
             image.save(outputFilePsd)
 
@@ -185,7 +184,8 @@ class Release_24_10_Tests(BaseTests):
 
             # Test Gradient parameters
             shapeLayer = cast(ShapeLayer, image.layers[1])
-            gradientSettings = cast(NoiseGradientFillSettings, shapeLayer.stroke.fill)
+            gradientSettings = cast(IGradientFillSettings, shapeLayer.stroke.fill)
+            noiseGradient = cast(NoiseGradient, gradientSettings.gradient)
 
             assert False == gradientSettings.dither
             assert False == gradientSettings.reverse
@@ -193,13 +193,13 @@ class Release_24_10_Tests(BaseTests):
             assert 34 == gradientSettings.scale
             assert False == gradientSettings.align_with_layer
             assert GradientType.LINEAR == gradientSettings.gradient_type
-            assert GradientKind.NOISE == gradientSettings.gradient_mode
-            assert 1837065285 == gradientSettings.rndNumberSeed
-            assert True == gradientSettings.show_transparency
-            assert True == gradientSettings.use_vector_color
-            assert 3072 == gradientSettings.roughness
-            assert NoiseColorModel.RGB == gradientSettings.color_model
-            assert 0 == gradientSettings.expansion_count
+            assert GradientKind.NOISE == noiseGradient.gradient_mode
+            assert 1837065285 == noiseGradient.rnd_number_seed
+            assert True == noiseGradient.show_transparency
+            assert True == noiseGradient.use_vector_color
+            assert 3072 == noiseGradient.roughness
+            assert NoiseColorModel.RGB == noiseGradient.color_model
+            assert 0 == noiseGradient.expansion_count
 
             def AssertAreEqual(self, expected, actual, message=None):
                 if expected != actual:

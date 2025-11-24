@@ -15,7 +15,8 @@ from aspose.psd.fileformats.psd.layers.adjustmentlayers import BrightnessContras
     SelectiveColorsTypes, CmykCorrection
 from aspose.psd.fileformats.psd.layers.filllayers import FillLayer
 from aspose.psd.fileformats.psd.layers.fillsettings import GradientColorPoint, GradientTransparencyPoint, FillType, \
-    ColorFillSettings, GradientFillSettings, PatternFillSettings
+    ColorFillSettings, GradientFillSettings, PatternFillSettings, IGradientFillSettings
+from aspose.psd.fileformats.psd.layers.gradient import SolidGradient
 from aspose.psd.fileformats.psd.layers.layerresources import CurvesManager, CurvesContinuousManager, PathShape
 from aspose.psd.fileformats.psd.layers.smartfilters import SharpenSmartFilter, NoiseDistribution, \
     GaussianBlurSmartFilter, AddNoiseSmartFilter
@@ -145,8 +146,9 @@ class Showcases(BaseTests):
             stroke = image.layers[1].blending_options.add_stroke(FillType.GRADIENT)
             stroke.size = 3
             gradient_fill = cast(GradientFillSettings, stroke.fill_settings)
-            gradient_fill.color_points = gradient_color_points
-            gradient_fill.transparency_points = gradient_transparency_points
+            gradient = cast(SolidGradient, gradient_fill.gradient)
+            gradient.color_points = gradient_color_points
+            gradient.transparency_points = gradient_transparency_points
 
             # Add inner shadow to layer 2
             inner_shadow = image.layers[2].blending_options.add_inner_shadow()
@@ -160,8 +162,10 @@ class Showcases(BaseTests):
 
             # Add gradient overlay to layer 4
             gradient_overlay = image.layers[4].blending_options.add_gradient_overlay()
-            gradient_overlay.settings.color_points = gradient_color_points
-            gradient_overlay.settings.transparency_points = gradient_transparency_points
+            settings = cast(IGradientFillSettings, gradient_overlay.settings)
+            gradient2 = cast(SolidGradient, settings.gradient)
+            gradient2.color_points = gradient_color_points
+            gradient2.transparency_points = gradient_transparency_points
 
             # Add color overlay to layer 5
             color_overlay = image.layers[5].blending_options.add_color_overlay()
@@ -391,10 +395,11 @@ class Showcases(BaseTests):
 
             gradientFillLayer = FillLayer.create_instance(FillType.GRADIENT)
             gradientFillLayer.display_name = "Gradient Fill Layer"
-            gradientFillSettings = cast(GradientFillSettings, gradientFillLayer.fill_settings)
-            gradientFillSettings.color_points = gradientColorPoints
+            gradientFillSettings = cast(IGradientFillSettings, gradientFillLayer.fill_settings)
+            gradient = cast(SolidGradient, gradientFillSettings.gradient)
+            gradient.color_points = gradientColorPoints
             gradientFillSettings.angle = -45
-            gradientFillSettings.transparency_points = gradientTransparencyPoints
+            gradient.transparency_points = gradientTransparencyPoints
             gradientFillLayer.clipping = 1
             image.add_layer(gradientFillLayer)
 

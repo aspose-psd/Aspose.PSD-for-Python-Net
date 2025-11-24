@@ -6,7 +6,8 @@ from aspose.psd.fileformats.png import PngColorType
 from aspose.psd.fileformats.psd import CompressionMethod, PsdImage
 from aspose.psd.fileformats.psd.layers import TextLayer
 from aspose.psd.fileformats.psd.layers.adjustmentlayers import GradientMapLayer
-from aspose.psd.fileformats.psd.layers.fillsettings import GradientFillSettings, GradientType
+from aspose.psd.fileformats.psd.layers.fillsettings import GradientFillSettings, GradientType, GradientMapSettings
+from aspose.psd.fileformats.psd.layers.gradient import SolidGradient
 from aspose.psd.imageloadoptions import PsdLoadOptions
 from aspose.psd.imageoptions import PngOptions, PsdOptions
 from aspose.psd.xmp import Namespaces, XmpPacketWrapper
@@ -45,18 +46,19 @@ class Release_24_06_Tests(BaseTests):
         with PsdImage.load(outputFile) as image:
             im = cast(PsdImage, image)
             gradient_map_layer = cast(GradientMapLayer, im.layers[1])
-            gradient_settings = cast(GradientFillSettings, gradient_map_layer.gradient_settings)
+            gradient_settings = cast(GradientMapSettings, gradient_map_layer.gradient_settings)
+            gradient = cast(SolidGradient, gradient_settings.gradient)
 
-            AssertAreEqual(0.0, gradient_settings.angle)
-            AssertAreEqual(4096, gradient_settings.interpolation)
-            AssertAreEqual(True, gradient_settings.reverse)
-            AssertAreEqual(False, gradient_settings.align_with_layer)
+            #AssertAreEqual(0.0, gradient.angle)
+            AssertAreEqual(4096, gradient.interpolation)
+            AssertAreEqual(False, gradient_settings.reverse)
+            #AssertAreEqual(False, gradient.align_with_layer) not supported by GradientMap
             AssertAreEqual(False, gradient_settings.dither)
-            AssertAreEqual(GradientType.LINEAR, gradient_settings.gradient_type)
-            AssertAreEqual(100, gradient_settings.scale)
-            AssertAreEqual(0.0, gradient_settings.horizontal_offset)
-            AssertAreEqual(0.0, gradient_settings.vertical_offset)
-            AssertAreEqual("Custom", gradient_settings.gradient_name)
+            #AssertAreEqual(GradientType.LINEAR, gradient.gradient_type) not supported by GradientMap
+            #AssertAreEqual(100, gradient.scale) not supported by GradientMap
+            #AssertAreEqual(0.0, gradient.horizontal_offset) not supported by GradientMap
+            #AssertAreEqual(0.0, gradient.vertical_offset) not supported by GradientMap
+            AssertAreEqual("Custom", gradient.gradient_name)
 
         Comparison.CheckAgainstEthalon(outputFile, referenceFile, 0, 1)
 

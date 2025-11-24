@@ -7,7 +7,7 @@ from aspose.psd.fileformats.ai import AiImage
 from aspose.psd.fileformats.png import PngColorType
 from aspose.psd.fileformats.psd import PsdImage, CompressionMethod
 from aspose.psd.fileformats.psd.layers.filllayers import FillLayer
-from aspose.psd.fileformats.psd.layers.fillsettings import GradientType, NoiseGradientFillSettings, ColorFillSettings
+from aspose.psd.fileformats.psd.layers.fillsettings import GradientType, ColorFillSettings, IGradientFillSettings
 from aspose.psd.fileformats.psd.layers.layerresources import BaseArtboardInfoResource, AbddResource, ArtBResource, \
     ArtDResource, LyvrResource, GdFlResource, SoCoResource
 from aspose.psd.imageoptions import PngOptions, PsdOptions
@@ -34,7 +34,7 @@ class Release_24_11_Tests(BaseTests):
             image = cast(PsdImage, img)
             fill_layer = cast(FillLayer, image.layers[1])  # Assuming index of the fill layer is 1
 
-            src_fill_settings = cast(NoiseGradientFillSettings, fill_layer.fill_settings)
+            src_fill_settings = cast(IGradientFillSettings, fill_layer.fill_settings)
             assert src_fill_settings is not None
 
             new_fill_settings = ColorFillSettings()
