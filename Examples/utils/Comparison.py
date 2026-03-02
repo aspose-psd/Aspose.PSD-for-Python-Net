@@ -1,4 +1,8 @@
 from io import BytesIO
+
+from aspose.psd.fileformats.psd import PsdImage
+from aspose.pycore import is_assignable
+
 from utils.OpenHelper import OpenHelper
 
 # This class can be used to check the output file and the reference
@@ -20,7 +24,7 @@ class Comparison:
         self.CompareImages(referenceImage, testingImage)
 
         if (referenceImage.layers.length != testingImage.layers.length):
-            raise Exception("Count of Layers is different", "Expected " + refPsd.layers.lenth + ", but was " + testPsd.layers.length)
+            raise Exception("Count of Layers is different", "Expected " + referenceImage.layers.lenth + ", but was " + testingImage.layers.length)
 
     @staticmethod
     def CompareAsStreams(output_file, reference_file, allowed_diff = 0):
@@ -46,4 +50,7 @@ class Comparison:
         compare = Comparison()
         with OpenHelper.open_file_by_path(reference_file) as referenceImage:
             with OpenHelper.open_file_by_path(output_file) as testingImage:
-                compare.ComparePsd(referenceImage, testingImage)
+                if is_assignable(referenceImage, PsdImage) & is_assignable(testingImage, PsdImage):
+                    compare.ComparePsd(referenceImage, testingImage)
+                else:
+                    compare.CompareImages(referenceImage, testingImage)
