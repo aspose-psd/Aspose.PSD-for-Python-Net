@@ -48,6 +48,17 @@ Aspose.PSD for Python via .NET can be used to develop applications on Windows De
 
 Are you ready to give Aspose.PSD for Python via .NET a try? Simply execute run this command: `pip install aspose-psd`.
 
+Examples below that edit PSD will require license set up:
+
+``` python
+from aspose.psd import License
+
+# Provide License File Path
+license = License()
+license.set_license("Aspose.PSDforPythonvia.NET.lic")
+```
+
+
 ### Open PSD File in Python and update text
 ``` python
 
