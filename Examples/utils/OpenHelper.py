@@ -19,14 +19,9 @@ class OpenHelper:
 
     @staticmethod
     def open_file_as_psd(stream):
-        #with PsdImage(500, 500) as psdImage:
-        #psdImage = PsdImage()
         layer = Layer(stream)
-        psdImage = PsdImage(layer.width, layer.height)
-        psdImage.layers = [layer]
-        psdImage.load_argb_32_pixels(layer.bounds);
-        #psdImage.add_layer(layer)
-        return psdImage
+        layer.load_argb_32_pixels(layer.bounds)
+        return layer
 
     @staticmethod
     def open_ai_file(stream, load_options):
