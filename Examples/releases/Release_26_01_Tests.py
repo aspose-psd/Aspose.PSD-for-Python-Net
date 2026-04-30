@@ -123,7 +123,7 @@ class Release_26_01_Tests(BaseTests):
         load_options.allow_non_changed_layer_repaint = True
 
         with Image.load(source_file, load_options) as image:
-                image.save(output_file)
+            image.save(output_file)
 
         # Verify file size
         assert source_file_size * 1.5 >= os.path.getsize(output_file)

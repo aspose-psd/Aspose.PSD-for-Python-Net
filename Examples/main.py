@@ -29,9 +29,17 @@ from releases.Release_25_11_Tests import Release_25_11_Tests
 from releases.Release_25_12_Tests import Release_25_12_Tests
 from releases.Release_26_01_Tests import Release_26_01_Tests
 from releases.Release_26_02_Tests import Release_26_02_Tests
+from releases.Release_26_03_Tests import Release_26_03_Tests
+from releases.Release_26_04_Tests import Release_26_04_Tests
 from showcases.Showcases import Showcases
 
 def run_releases_tests():
+    release26_04 = Release_26_04_Tests()
+    release26_04.RunAllTests()
+
+    release26_03 = Release_26_03_Tests()
+    release26_03.RunAllTests()
+
     release26_02 = Release_26_02_Tests()
     release26_02.RunAllTests()
 
@@ -125,5 +133,5 @@ if __name__ == '__main__':
 
     #lic = License()
     #lic.set_license("")
-    run_showcases_tests()
     run_releases_tests()
+    run_showcases_tests()
