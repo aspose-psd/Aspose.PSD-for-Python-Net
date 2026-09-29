@@ -1,6 +1,5 @@
 import io
 
-import numpy as np
 import pytest
 from aspose.psd import FontSettings, DataRecoveryMode
 from aspose.psd.fileformats.ai import AiImage

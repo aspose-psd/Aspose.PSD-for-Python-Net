@@ -3,10 +3,7 @@ import struct
 import time
 import uuid
 from ctypes import c_long, c_int, c_int32
-import numpy as np
 
-
-import psutil
 import pytest
 from aspose.psd import Image, FontSettings, FileFormat, Rectangle, Color, PointF, Point, PixelDataFormat
 from aspose.psd.fileformats.ai import AiImage
