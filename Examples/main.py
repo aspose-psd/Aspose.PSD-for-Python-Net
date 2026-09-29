@@ -31,9 +31,30 @@ from releases.Release_26_01_Tests import Release_26_01_Tests
 from releases.Release_26_02_Tests import Release_26_02_Tests
 from releases.Release_26_03_Tests import Release_26_03_Tests
 from releases.Release_26_04_Tests import Release_26_04_Tests
+from releases.Release_26_05_Tests import Release_26_05_Tests
+from releases.Release_26_06_Tests import Release_26_06_Tests
+from releases.Release_26_07_Tests import Release_26_07_Tests
+from releases.Release_26_08_Tests import Release_26_08_Tests
+from releases.Release_26_09_Tests import Release_26_09_Tests
 from showcases.Showcases import Showcases
 
 def run_releases_tests():
+
+    release26_09 = Release_26_09_Tests()
+    release26_09.RunAllTests()
+
+    release26_08 = Release_26_08_Tests()
+    release26_08.RunAllTests()
+
+    release26_07 = Release_26_07_Tests()
+    release26_07.RunAllTests()
+
+    release26_06 = Release_26_06_Tests()
+    release26_06.RunAllTests()
+
+    release26_05 = Release_26_05_Tests()
+    release26_05.RunAllTests()
+
     release26_04 = Release_26_04_Tests()
     release26_04.RunAllTests()
 
