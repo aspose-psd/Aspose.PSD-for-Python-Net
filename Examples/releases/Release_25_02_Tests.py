@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import numpy as np
 import pytest
 from aspose.psd import Color
 from aspose.psd.fileformats.ai import AiImage
